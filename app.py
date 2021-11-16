@@ -26,6 +26,7 @@ def default():
 
 @app.route('/login')
 def login():
+    session['auth'] = 'yebalrot'
     return render_template('1.html')
 
 
