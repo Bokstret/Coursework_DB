@@ -19,6 +19,7 @@ db.create_all()
 
 @app.route('/')
 def default():
+    session['auth'] = 1
     return render_template('index.html')
 
 
