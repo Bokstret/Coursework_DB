@@ -19,13 +19,17 @@ class Users(db.Model):
 db.create_all()
 
 
-@app.route('/')
-def default():
-    return render_template('index.html')
 
 @app.route('/login', methods=['post'])
 def login():
     return render_template('1.html')
+
+
+@app.route('/')
+def default():
+    return render_template('index.html')
+
+
 
 
 
