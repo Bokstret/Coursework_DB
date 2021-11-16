@@ -23,9 +23,8 @@ db.create_all()
 def default():
     return render_template('index.html')
 
-@app.route('/login')
+@app.route('/login', methods=['post'])
 def login():
-    session['auth'] = '1'
     return render_template('index.html')
 
 
