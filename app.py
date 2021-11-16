@@ -25,7 +25,7 @@ def default():
 
 @app.route('/login', methods=['post'])
 def login():
-    return render_template('index.html')
+    return render_template('1.html')
 
 
 
