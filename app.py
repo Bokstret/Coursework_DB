@@ -12,9 +12,9 @@ db = SQLAlchemy(app)
 
 
 class User(db.Model):
-	__tablename__ = 'users'
-	login = db.Column(db.String(50), primary_key=True, nullable=False)
-	password = db.Column(db.String(50), nullable=False)
+    __tablename__ = 'users'
+    login = db.Column(db.String(50), primary_key=True, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
 
 
 
