@@ -28,7 +28,7 @@ def default():
     return render_template('index.html')
 
 @app.route('/login')
-def default():
+def auth_check():
     if 'auth' in session:	
         return render_template('index.html')
     else:
