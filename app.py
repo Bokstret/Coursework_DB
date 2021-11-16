@@ -11,16 +11,6 @@ db = SQLAlchemy(app)
 
 
 
-class User(db.Model):
-    __tablename__ = 'users'
-    login = db.Column(db.String(50), primary_key=True, nullable=False)
-    password = db.Column(db.String(50), nullable=False)
-
-
-
-
-
-db.create_all()
 
 @app.route('/')
 def default():
