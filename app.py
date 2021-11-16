@@ -1,6 +1,5 @@
 from flask import Flask, url_for,request, send_from_directory, render_template,redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_session import Session
 
 
 app = Flask(__name__, static_url_path='')
