@@ -23,8 +23,8 @@ def default():
     return render_template('index.html')
 
 
-@app.route('/login')
-def login():
+@app.route('/logi')
+def logi():
     return render_template('login.html')
 
 
