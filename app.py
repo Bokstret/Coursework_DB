@@ -25,7 +25,8 @@ def default():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    session['username'] = '123'
+    if request.method == 'POST':
+        session['username'] = '123'
     return render_template('1.html')
 
 
