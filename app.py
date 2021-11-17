@@ -19,15 +19,13 @@ db.create_all()
 
 @app.route('/')
 def default():
-    if 'username' in session:
-        return render_template('index.html')
-    return redirect('/login')
+    return render_template('index.html')
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        session['username'] = '123'
+    session['username'] = '123'
     return render_template('1.html')
 
 
