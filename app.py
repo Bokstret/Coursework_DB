@@ -23,8 +23,9 @@ db.create_all()
 
 @app.route('/')
 def default():
-    session['username'] = '123'
-    return render_template('index.html')
+    resp = make_response(render_template('index.html'))
+    resp.set_cookie('somecookiename', 'I am cookie')
+    return resp 
 
 
 
