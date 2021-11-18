@@ -29,7 +29,9 @@ def default():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('1.html')
+    resp = make_response(render_template('1.html'))
+    resp.set_cookie('somecookiename', 'I am cookie')
+    return resp 
 
 if __name__ == '__main__':
     app.run()
