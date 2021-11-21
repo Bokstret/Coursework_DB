@@ -1,0 +1,6 @@
+    {% for code in codes %}
+        <div>
+            <a href="{{ url_for('code_page', code_id=code.id) }}"><p>{{ code.title }}</p></a>
+            <a href="{{ url_for('code_page', code_id=code.id) }}"><img src="{{ url_for('codes_images', code_id=code.id) }}" alt=""></a>
+        </div>
+    {% endfor %}
