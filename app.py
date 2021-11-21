@@ -1,8 +1,8 @@
 from flask import Flask
-
+from models import Base
 from config import Config
 
-
+Base.create_all()
 app = Flask(__name__)
 app.secret_key = Config.SECRET_KEY
 
