@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+
+
+
+</head>
+<body>
+
+{% include "header.html" %}
+
+
+
+    <form action="/login" method="POST" id="field-cont">
+
+        <div id="title">Welcome back!</div>
+
+        <div class="fields" id="email-field-login"><p>Email</p><input class="input-fields" type="email" name="email" placeholder="example@mail.com" required></div>
+
+        <div class="fields" id="password-field"><p>Password</p><input class="input-fields" type="password" name="password" placeholder="●●●●●●●●●●●●●" required></div>
+
+        <div id="login-field"><input id="login-button" type="submit" value="Log In"></div>
+
+    </form>
+    <div id="message-login">    
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <p class="message-text">{{ messages[0] }}</p>
+    {% endif %}
+    {% endwith %}</div>
+</body>
+</html>
