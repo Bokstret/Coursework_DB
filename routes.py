@@ -110,7 +110,7 @@ def add_code():
 
         new_code = code_controller.create(author_id=user_id, title=title, zip_bytes=code_bytes, image_bytes=image_bytes)
 
-        return redirect(url_for('my_code'))
+        return redirect(url_for('code_page', code_id=new_code.id))
 
 
 @app.route('/my-code')
@@ -155,15 +155,24 @@ def purchased():
     return render_template('purchased.html', codes=codes)
 
 
-@app.route('/buy/<int:code_id>')
+@app.route('/buy/<int:code_id>', methods=['GET', 'POST'])
 def make_purchase(code_id):
-    if not 'user' in session:
-        return redirect(url_for('login'))
+    if request.method == 'GET':
+        if not 'user' in session:
+            return redirect(url_for('login'))
 
-    user_id = session['user']
-    purchase_controller.create(user_id, code_id)
+        code = code_controller.get(code_id)
+        if not code:
+            return redirect(url_for('index'))
+        return render_template('make_purchase.html', code=code)
+    else:
+        if not 'user' in session:
+            return redirect(url_for('login'))
 
-    return redirect(url_for('purchased'))
+        user_id = session['user']
+        purchase_controller.create(user_id, code_id)
+
+        return redirect(url_for('code_page', code_id=code_id))
 
 
 @app.route('/codes/<int:code_id>')
