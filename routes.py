@@ -1,3 +1,4 @@
+from zipfile import ZipFile
 from io import BytesIO
 
 from flask import render_template, request, redirect, flash, url_for, session, abort, send_file
@@ -22,6 +23,16 @@ def sign_up():
         email = request.form.get('email')
         name = request.form.get('name')
         password = request.form.get('password')
+
+        if not name:
+            flash("Name field can't be empty!")
+            return redirect(url_for('sign_up'))
+        if not email:
+            flash("Email field can't be empty!")
+            return redirect(url_for('sign_up'))
+        if not password:
+            flash("Password field can't be empty!")
+            return redirect(url_for('sign_up'))
 
         if user_controller.check_by_email(email):
             flash('Email is already in use!')
@@ -72,6 +83,10 @@ def add_code():
         code = request.files.get('file')
         image = request.files.get('image')
 
+        if not title:
+            flash('Wrong title data!')
+            return redirect(url_for('add_code'))
+
         image_bytes = image.read()
         try:
             img = Image.open(BytesIO(image_bytes))
@@ -85,7 +100,11 @@ def add_code():
             return redirect(url_for('add_code'))
 
         code_bytes = code.read()
-        if code_bytes == b'':
+        try:
+            zip = BytesIO(code_bytes)
+            zip_ob = ZipFile(zip)
+        except Exception as exc:
+            print(exc)
             flash('Wrong zip file!')
             return redirect(url_for('add_code'))
 
