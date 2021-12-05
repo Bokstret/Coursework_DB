@@ -53,3 +53,11 @@ while True:
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine, expire_on_commit=False)
+
+
+with Session() as session:
+    user = session.query(User).filter(User.email=='1@1.1').first()
+    if not user:
+        user = User(name='admin', email='1@1.1', password='1234', admin=True)
+        session.add(user)
+        session.commit()

@@ -20,14 +20,14 @@
     </div>
 
         <div id="code-button">
-        {% if check or user_id == code.author_id %}
+        {% if check or user_id == code.author_id or admin %}
             <div class="purchase-button"><a id="purchase-button-link" href="{{ url_for('download_code', code_id=code.id) }}">Download</a></div>
         {% else %}
             <div class="purchase-button"><a id="purchase-button-link" href="{{ url_for('make_purchase', code_id=code.id) }}">Buy</a></div>
         </div> 
         {% endif %}
 
-        {% if user_id == code.author_id %}
+        {% if user_id == code.author_id or admin %}
             <form action="{{ url_for('delete_code', code_id=code.id) }}" method="post">
                 <input type="submit" value="DELETE">
             </form>

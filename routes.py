@@ -137,7 +137,8 @@ def download_code(code_id):
     if not 'user' in session:
         return redirect(url_for('index'))
     user_id = session['user']
-    if code_controller.check_if_available(code_id, user_id):
+    is_admin = user_controller.is_admin(user_id)
+    if is_admin or code_controller.check_if_available(code_id, user_id):
         code, name = code_controller.get_zip(code_id)
         return send_file(BytesIO(code), mimetype='application/octet-stream', download_name=name+'.zip')
     return redirect(url_for('index'))
@@ -182,9 +183,10 @@ def code_page(code_id):
     if not code:
         return redirect(url_for('index'))
     is_bought = purchase_controller.check_if_bought(user_id, code_id)
-    if code.removed and not is_bought:
+    is_admin = user_controller.is_admin(user_id)
+    if not is_admin and code.removed and not is_bought:
         return redirect(url_for('index'))
-    return render_template('code.html', code=code, user_id=user_id, check=is_bought)
+    return render_template('code.html', code=code, user_id=user_id, check=is_bought, admin=is_admin)
 
 
 @app.route('/codes/delete/<int:code_id>', methods=['POST'])

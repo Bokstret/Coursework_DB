@@ -1,4 +1,5 @@
 from models import Session, Code, Purchase, User
+from controllers.user_controller import is_admin
 
 
 def create(author_id, title, zip_bytes, image_bytes):
@@ -53,7 +54,7 @@ def get(code_id):
 def delete(code_id, user_id):
     with Session() as session:
         code = session.query(Code).get(code_id)
-        if code and code.author_id == user_id:
+        if code and (code.author_id == user_id or is_admin(user_id)):
             code.removed = True
             session.add(code)
             session.commit()
