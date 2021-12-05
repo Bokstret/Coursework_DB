@@ -179,4 +179,23 @@ def make_purchase(code_id):
 def code_page(code_id):
     user_id = session['user'] if 'user' in session else None
     code = code_controller.get(code_id)
-    return render_template('code.html', code=code, user_id=user_id, check=purchase_controller.check_if_bought)
+    if not code:
+        return redirect(url_for('index'))
+    is_bought = purchase_controller.check_if_bought(user_id, code_id)
+    if code.removed and not is_bought:
+        return redirect(url_for('index'))
+    return render_template('code.html', code=code, user_id=user_id, check=is_bought)
+
+
+@app.route('/codes/delete/<int:code_id>', methods=['POST'])
+def delete_code(code_id):
+    if request.method == 'POST':
+        if not 'user' in session:
+            return redirect(url_for('index'))
+
+        user_id = session['user']
+        res = code_controller.delete(code_id, user_id)
+        if res:
+            return redirect(url_for('my_code'))
+        else:
+            return redirect(url_for('code_page', code_id=code_id))
