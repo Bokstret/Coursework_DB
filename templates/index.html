@@ -9,7 +9,19 @@
     <link href="/static/css/content.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+
 {% include "header.html" %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <p>{{ messages[0] }}</p>
+    {% endif %}
+{% endwith %}</div>
+
+{% if admin %}
+    <p>Admin functionality</p>
+    <a href="{{ url_for('admin_add_user') }}">Add new user</a>
+{% endif %}
 
 <div id="store-title">Store</div>
 

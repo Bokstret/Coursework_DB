@@ -11,14 +11,17 @@ from controllers import user_controller, code_controller, purchase_controller
 @app.route('/')
 def index():
     user_id = session['user'] if 'user' in session else None
+    admin = user_controller.is_admin(user_id)
     codes = code_controller.get_all_codes()
-    return render_template('index.html', codes=codes, user_id=user_id)
+    return render_template('index.html', codes=codes, user_id=user_id, admin=admin)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'GET':
-        return render_template('registration.html')
+        if not 'user' in session:
+            return render_template('registration.html')
+        return redirect(url_for('index'))
     else:
         email = request.form.get('email')
         name = request.form.get('name')
@@ -47,7 +50,9 @@ def sign_up():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return render_template('login.html')
+        if not 'user' in session:
+            return render_template('login.html')
+        return redirect(url_for('index'))
     else:
         email = request.form.get('email')
         password = request.form.get('password')
@@ -201,3 +206,46 @@ def delete_code(code_id):
             return redirect(url_for('my_code'))
         else:
             return redirect(url_for('code_page', code_id=code_id))
+
+
+@app.route('/admin/add_user', methods=['GET', 'POST'])
+def admin_add_user():
+    if request.method == 'GET':
+        if not 'user' in session:
+            return redirect(url_for('index'))
+
+        is_admin = user_controller.is_admin(session['user'])
+        if not is_admin:
+            return redirect(url_for('index'))
+
+        return render_template('admin_add_user.html')
+    elif request.method == 'POST':
+        if not 'user' in session:
+            return redirect(url_for('index'))
+
+        is_admin = user_controller.is_admin(session['user'])
+        if not is_admin:
+            return redirect(url_for('index'))
+
+        email = request.form.get('email')
+        name = request.form.get('name')
+        password = request.form.get('password')
+
+        if not name:
+            flash("Name field can't be empty!")
+            return redirect(url_for('admin_add_user'))
+        if not email:
+            flash("Email field can't be empty!")
+            return redirect(url_for('admin_add_user'))
+        if not password:
+            flash("Password field can't be empty!")
+            return redirect(url_for('admin_add_user'))
+
+        if user_controller.check_by_email(email):
+            flash('Email is already in use!')
+            return redirect(url_for('admin_add_user'))
+
+        new_user = user_controller.create(email, password, name)
+
+        flash('User has been created!')
+        return redirect(url_for('index'))

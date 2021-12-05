@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+
+<body>
+
+    {% include "header.html" %}
+
+
+
+    <form action="{{ url_for('admin_add_user') }}" method="POST" id="field-cont">
+        <div id="title">Add user</div>
+
+        <div class="fields" id="name-field">
+            <p>Name</p><input class="input-fields" type="text" name="name" placeholder="New user name" required>
+        </div>
+
+
+        <div class="fields" id="email-field-signup">
+            <p>Email</p><input class="input-fields" type="email" name="email" placeholder="example@mail.com" required>
+        </div>
+
+        <div class="fields" id="password-field">
+            <p>Password</p><input class="input-fields" type="password" name="password" placeholder="●●●●●●●●●●●●●"
+                required>
+        </div>
+
+        <div id="login-field"><input id="login-button" type="submit" value="Create"></div>
+    </form>
+
+
+    <div id="message-login">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <p class="message-text">{{ messages[0] }}</p>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+</body>
+
+</html>
