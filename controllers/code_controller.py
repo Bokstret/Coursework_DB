@@ -1,4 +1,5 @@
-from models import Session, Code, Purchase
+from models import Session, Code, Purchase, User
+from controllers.user_controller import is_admin
 
 
 def create(author_id, title, zip_bytes, image_bytes):
@@ -11,7 +12,7 @@ def create(author_id, title, zip_bytes, image_bytes):
 
 def get_by_user(user_id):
     with Session() as session:
-        codes = session.query(Code).filter(Code.author_id==user_id).all()
+        codes = session.query(Code).filter(Code.author_id==user_id).filter(Code.removed!=True).all()
         return codes
 
 
@@ -23,7 +24,7 @@ def get_image_by_id(code_id):
 
 def get_all_codes():
     with Session() as session:
-        codes = session.query(Code).all()
+        codes = session.query(Code).filter(Code.removed != True).all()
         return codes
 
 
@@ -48,3 +49,14 @@ def get(code_id):
     with Session() as session:
         code = session.query(Code).get(code_id)
         return code
+
+
+def delete(code_id, user_id):
+    with Session() as session:
+        code = session.query(Code).get(code_id)
+        if code and (code.author_id == user_id or is_admin(user_id)):
+            code.removed = True
+            session.add(code)
+            session.commit()
+            return True
+        return False

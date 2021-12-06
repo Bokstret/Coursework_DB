@@ -18,6 +18,10 @@
         <a href="{{ url_for('purchased') }}" id="purchased">Purchased code</a>
     {% else %}
     {% endif %}
+    {% if admin %}
+    <p id="admin_func" onclick="adminPanelClick()">Admin functionality <<</p>
+    <a id="add_user" href="{{ url_for('admin_add_user') }}">Add new user</a>
+{% endif %}
        </div>
 
        <div>
@@ -29,6 +33,18 @@
     {% endif %}
     </div>
     </div>
+
+<script>
+  function adminPanelClick() {
+    if(document.getElementById('admin_func').textContent == 'Admin functionality <<'){
+    document.getElementById('add_user').style.display = 'block'
+    document.getElementById('admin_func').textContent = 'Admin functionality >>'}
+    else{
+    document.getElementById('add_user').style.display = 'none'
+    document.getElementById('admin_func').textContent = 'Admin functionality <<'
+    }
+  }
+</script>
 
 </body>
 </html>

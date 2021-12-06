@@ -1,6 +1,6 @@
 import time
 
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, LargeBinary
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, LargeBinary, Boolean
 from sqlalchemy.orm import relationship, sessionmaker, deferred
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -16,6 +16,7 @@ class User(Base):
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     name = Column(String, nullable=False)
+    admin = Column(Boolean, nullable=False, default=False)
 
 
 class Code(Base):
@@ -25,6 +26,7 @@ class Code(Base):
     data = deferred(Column(LargeBinary, nullable=False))
     title = Column(String, nullable=False)
     image = deferred(Column(LargeBinary, nullable=False))
+    removed = Column(Boolean, nullable=False, default=False)
 
     author = relationship('User', backref='works')
 
@@ -51,3 +53,11 @@ while True:
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine, expire_on_commit=False)
+
+
+with Session() as session:
+    user = session.query(User).filter(User.email=='1@1.1').first()
+    if not user:
+        user = User(name='admin', email='1@1.1', password='1234', admin=True)
+        session.add(user)
+        session.commit()

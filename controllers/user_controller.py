@@ -27,3 +27,11 @@ def check_by_email(email):
         if user:
             return True
         return False
+
+
+def is_admin(id):
+    with Session() as session:
+        usr = session.query(User).get(id)
+        if not usr or not usr.admin:
+            return False
+        return True

@@ -9,7 +9,20 @@
     <link href="/static/css/content.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+
 {% include "header.html" %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div id="message_cont">
+        <div id="message_back">
+            <p id="message_text">{{ messages[0] }}</p>
+        </div>
+    </div>
+    {% endif %}
+{% endwith %}
+
+
 
 <div id="store-title">Store</div>
 
