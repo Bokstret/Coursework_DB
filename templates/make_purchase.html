@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ code.title }}</title>
+
+    <link href="/static/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    {% include "header.html" %}
+
+    
+    <form id="confirm_cont" action="{{ url_for('make_purchase', code_id=code.id) }}" method="post">
+        <div id="confirm_back">
+            <p id="confirm_text">Are you sure you want to buy {{ code.title }}?</p>
+            <input id="confirm_button" type="submit" value="Confirm purchase">
+        </div>
+
+    </form>
+
+
+</body>
+</html>

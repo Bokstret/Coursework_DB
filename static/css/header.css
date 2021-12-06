@@ -1,0 +1,56 @@
+    body{
+      background: #1e222d;
+    }
+
+    a{
+    color: white;
+    text-decoration: none; 
+    }
+#signup{
+    margin-right: 40px;
+}
+
+#purchased{
+    margin-left: 40px;
+}
+
+#codeseller{
+font-size: 20px;
+color: white;
+}
+
+#header{
+    margin: auto;
+    height: 50px;
+    font-family: monospace;
+    font-size: 14px;
+    width: 94%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#left-side-header{
+    display: flex;
+    align-items: center;
+}
+
+#my-code{
+    margin-left: 75px;
+}
+
+#admin_func{
+    color: white;
+    margin-left: 40px;
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
+}
+
+#add_user{
+    margin-left: 10px;
+    text-decoration: underline;
+    display: none;
+}

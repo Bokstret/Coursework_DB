@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Seller</title>
+
+    <link href="/static/css/header.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div id="header">
+
+        <div id="left-side-header">
+        <p id="codeseller"><a href="{{ url_for('index') }}">CODE SELLER</a></p>
+    {% if 'user' in session %}
+        <a id="my-code" href="{{ url_for('my_code') }}" >My code</a>
+        <a href="{{ url_for('purchased') }}" id="purchased">Purchased code</a>
+    {% else %}
+    {% endif %}
+    {% if admin %}
+    <p id="admin_func" onclick="adminPanelClick()">Admin functionality <<</p>
+    <a id="add_user" href="{{ url_for('admin_add_user') }}">Add new user</a>
+{% endif %}
+       </div>
+
+       <div>
+    {% if 'user' in session %}
+            <a href="{{ url_for('sign_out') }}">Sign Out</a>
+    {% else %}
+            <a href="{{ url_for('sign_up') }}" id="signup">Sign Up</a>
+            <a href="{{ url_for('login') }}">Log In</a>
+    {% endif %}
+    </div>
+    </div>
+
+<script>
+  function adminPanelClick() {
+    if(document.getElementById('admin_func').textContent == 'Admin functionality <<'){
+    document.getElementById('add_user').style.display = 'block'
+    document.getElementById('admin_func').textContent = 'Admin functionality >>'}
+    else{
+    document.getElementById('add_user').style.display = 'none'
+    document.getElementById('admin_func').textContent = 'Admin functionality <<'
+    }
+  }
+</script>
+
+</body>
+</html>
