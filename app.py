@@ -9,5 +9,4 @@ with app.app_context():
 
 
 if __name__=='__main__':
-    app.run()
-
+    app.run('0.0.0.0', port=Config.PORT, debug=False)
